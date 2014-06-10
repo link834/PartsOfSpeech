@@ -20,9 +20,8 @@ def pickWord(dictionary):
 infilename = "./assignment3/allTraining.txt"
 trainingdata = open(infilename).readlines()
  
-contextconst = ""
- 
-context = contextconst
+contextconst = ['','']
+
 firstWordProbs = {}
 model = {}
 
@@ -31,6 +30,7 @@ prob_constant = float(1.0 / float(total_lines))
 #prob_constant = 1
 
 for line in trainingdata:
+	context = contextconst
 	pairs = line.split()
 	
 	firstWord, firstPos = pairs[0].split('_')
@@ -52,7 +52,10 @@ for line in trainingdata:
 		else:
 			model[str(context)] = {word: 1}
 
-		context = word
+		#print(context)
+		context = (context + [word])[1:]
+#		if(str(context) == str(['','But'])):
+#			print(context)
 
 # calculate context probablities
 for mkey in model:
@@ -69,12 +72,17 @@ for mkey in model:
 		
 # begin printing words
 print()
-context = pickWord(firstWordProbs)
-print(context,end=" ")
+startWord = pickWord(firstWordProbs)
+context = (contextconst + [startWord])[1:]
+print(startWord,end=" ")
 for i in range(100):
-    word = pickWord(model[context])
-    print(word,end=" ")
-    context = word
+	word = ""
+	if(str(context) in model):
+		word = pickWord(model[str(context)])
+	else:
+		pass
+	print(word,end=" ")
+	context = (context + [word])[1:]
 print()
 print()
 
