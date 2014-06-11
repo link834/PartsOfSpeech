@@ -1,0 +1,3 @@
+*.DS_Store
+tagger.py
+count_freqs.py
