@@ -51,18 +51,6 @@ def viterbi(sentence, hmm):
 	(prob, state) = max((V[n][y], y) for y in states)
 	return (prob, path[state])
 
-def print_dptable(V):
-    s = "    " + " ".join(("%7d" % i) for i in range(len(V))) + "\n"
-    for y in V[0]:
-        s += "%.5s: " % y
-        s += " ".join("%.7s" % ("%f" % v[y]) for v in V)
-        s += "\n"
-    print(s)
-
-def argmax(listOfPairs):
-	def secondElement(x):
-		return x[1]
-	return max(listOfPairs, key = secondElement)
 
 def readSentences(handle):
   sentence = []
@@ -73,16 +61,12 @@ def readSentences(handle):
       yield sentence
       sentence = []
 
-def printPOSs(sentence, pos):
-	print "\n".join([w + " " + t for w, t in zip(sentence, pos)])
-
 def main(input_file, hmm_file):
 	hmm = HMM(hmm_file)
 	for s in readSentences(input_file):
 		if s != []:
 			prob, path = viterbi(s, hmm)
 			print path
-		# printPOSs(s, posTagging)
 
 	
 
