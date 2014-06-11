@@ -1,0 +1,5 @@
+*.DS_Store
+tagger.py
+count_freqs.py
+HMM.pyc
+devtest.dev1
